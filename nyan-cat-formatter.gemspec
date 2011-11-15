@@ -6,8 +6,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Matt Sears"]
   s.email       = ["matt@mattsears.com"]
   s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = %q{Nyan Cat inspired RSpec formatter! }
+  s.description = %q{Nyan Cat inspired RSpec formatter! }
 
   s.rubyforge_project = "nyan-cat-formatter"
 
