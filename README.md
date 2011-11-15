@@ -25,8 +25,9 @@ $ gem install nyan-cat-formatter
 
 If you want to use Nyan Cat as your default formatter, simply put the options in your .rspec file:
 
+```
 --format NyanCatFormatter
---color
+```
 
 Contributing
 ----------
