@@ -26,7 +26,12 @@ describe NyanCatFormatter do
 
       it 'should relax Nyan Cat' do
         @formatter.example_passed(@example)
-        @formatter.nyan_cat.should == '~|_(^.^)'
+        @formatter.nyan_cat.should == <<-CAT
+_,------,
+_|   /\\_/\\
+~|__( ^ .^)
+_""  ""
+CAT
       end
 
     end
@@ -45,7 +50,12 @@ describe NyanCatFormatter do
 
       it 'should alert Nyan Cat' do
         @formatter.example_pending(@example)
-        @formatter.nyan_cat.should == '~|_(o.o)'
+        @formatter.nyan_cat.should == <<-CAT
+_,------,
+_|   /\\_/\\
+~|__( o .o)
+_""  ""
+CAT
       end
 
     end
@@ -64,7 +74,12 @@ describe NyanCatFormatter do
 
       it 'should alert Nyan Cat' do
         @formatter.example_failed(@example)
-        @formatter.nyan_cat.should == '~|_(o.o)'
+        @formatter.nyan_cat.should == <<-CAT
+_,------,
+_|   /\\_/\\
+~|__( o .o)
+_""  ""
+CAT
       end
 
     end
@@ -107,7 +122,7 @@ describe NyanCatFormatter do
   describe 'highlight' do
 
     it 'should rainbowify passing examples' do
-      @formatter.highlight('=').should == "\e[38;5;154m=\e[0m"
+      @formatter.highlight('=').should == "\e[38;5;154m-\e[0m"
     end
 
     it 'should mark failing examples as red' do

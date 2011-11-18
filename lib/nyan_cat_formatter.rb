@@ -6,9 +6,28 @@ class NyanCatFormatter < RSpec::Core::Formatters::BaseTextFormatter
   ESC     = "\e["
   NND     = "#{ESC}0m"
   PASS    = '='
+  PASS_ARY= ['-', '_']
   FAIL    = '*'
   ERROR   = '!'
   PENDING = '·'
+  HAPPY_CAT = <<-CAT
+_,------,
+_|   /\\_/\\
+~|__( ^ .^)
+_""  ""
+CAT
+  CONCERNED_CAT = <<-CAT
+_,------,
+_|   /\\_/\\
+~|__( o .o)
+_""  ""
+CAT
+  ASLEEP_CAT = <<-CAT
+_,------,
+_|   /\\_/\\
+~|__( - .-)
+_""  ""
+CAT
 
   attr_reader :title, :current, :example_results, :color_index
 
@@ -68,7 +87,7 @@ class NyanCatFormatter < RSpec::Core::Formatters::BaseTextFormatter
   def nyan_trail
     width =  percentage * @bar_length / 100
     marker = @example_results.map{ |mark| highlight(mark) }.join
-    sprintf("%s#{nyan_cat}%s", marker, " " * (@bar_length - width) )
+    nyan_cat_lines = nyan_cat.split("\n").map {|line| sprintf("%s#{line}%s", marker, " " * (@bar_length - width) ) }.join("\n")
   end
 
   # Calculates the percentage completed any given point
@@ -84,11 +103,11 @@ class NyanCatFormatter < RSpec::Core::Formatters::BaseTextFormatter
   # Returns String Nyan Cat
   def nyan_cat
     if @failure_count > 0 || @pending_count > 0
-      '~|_(o.o)'
+      CONCERNED_CAT
     elsif (@current == @example_count)
-      '~|_(-.-)'
+      ASLEEP_CAT
     else
-      '~|_(^.^)'
+      HAPPY_CAT
     end
   end
 
@@ -96,8 +115,12 @@ class NyanCatFormatter < RSpec::Core::Formatters::BaseTextFormatter
   #
   def dump_progress
     max_width = 80
-    line  = sprintf("%-8s %s", @title[0,(7)] + ":", nyan_trail)
-    tail  = (@current == @example_count) ? "\n" : "\r"
+    lines = []
+    nyan_trail.split("\n").each do |nyan_trail_line|
+      lines << sprintf("%-8s %s", @title[0,(7)] + ":", nyan_trail_line)
+    end
+    line = lines.join("\n")
+    tail  = (@current == @example_count) ? "\n" : sprintf("%c[1A%c[1A%c[1A\r", 0x1B, 0x1B, 0x1B)
 
     if line.length == max_width - 1
       output.print line + tail
@@ -137,7 +160,7 @@ class NyanCatFormatter < RSpec::Core::Formatters::BaseTextFormatter
   #
   def highlight(mark = PASS)
     case mark
-      when PASS;  rainbowify mark
+      when PASS;  rainbowify PASS_ARY[@color_index%2]
       when FAIL;  red mark
       when ERROR; yellow mark
       else mark
