@@ -29,6 +29,22 @@ If you want to use Nyan Cat as your default formatter, simply put the options in
 --format NyanCatFormatter
 ```
 
+Using with Rails rake spec
+----------
+
+To use Nyan Cat with Rails "rake spec" you need to add Nyan Cat dependecy in your Gemfile. 
+
+```
+group :test do
+  gem "nyan-cat-formatter"
+end
+```
+And then
+
+```
+bundle install
+```
+
 Contributing
 ----------
 
