@@ -95,8 +95,9 @@ class NyanCatFormatter < RSpec::Core::Formatters::BaseTextFormatter
   # Displays the current progress in all Nyan Cat glory
   #
   def dump_progress
-    max_width = 80
-    line  = sprintf("%-8s %s", @title[0,(7)] + ":", nyan_trail)
+    title_width = @example_count.to_s.length * 2 + 4
+    max_width   = 80
+    line  = sprintf("%#{title_width}s %s", @title + ":", nyan_trail)
     tail  = (@current == @example_count) ? "\n" : "\r"
 
     if line.length == max_width - 1
