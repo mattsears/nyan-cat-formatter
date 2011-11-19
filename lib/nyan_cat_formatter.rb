@@ -114,10 +114,11 @@ CAT
   # Displays the current progress in all Nyan Cat glory
   #
   def dump_progress
+    title_width = @example_count.to_s.length * 2 + 4
     max_width = 80
     lines = []
     nyan_trail.split("\n").each do |nyan_trail_line|
-      lines << sprintf("%-8s %s", @title[0,(7)] + ":", nyan_trail_line)
+      lines << sprintf("%#{title_width}s %s", @title[0,(7)] + ":", nyan_trail_line)
     end
     line = lines.join("\n")
     tail  = (@current == @example_count) ? "\n" : sprintf("%c[1A%c[1A%c[1A\r", 0x1B, 0x1B, 0x1B)
