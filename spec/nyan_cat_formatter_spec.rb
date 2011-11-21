@@ -8,7 +8,7 @@ describe NyanCatFormatter do
     @formatter = NyanCatFormatter.new(@output)
     @formatter.start(2)
     @example = RSpec::Core::ExampleGroup.describe.example
-    sleep(0.2)  # Just to slow it down a little :-)
+    sleep(0.1)  # Just to slow it down a little :-)
   end
 
   describe 'passed, pending and failed' do
@@ -26,12 +26,15 @@ describe NyanCatFormatter do
 
       it 'should relax Nyan Cat' do
         @formatter.example_passed(@example)
-        @formatter.nyan_cat.should == <<-CAT
-_,------,
-_|   /\\_/\\
-~|__( ^ .^)
-_""  ""
-CAT
+        @formatter.nyan_cat.should == [ "_,------,   ",
+          "_|  /\\_/\\ ",
+          "~|_( ^ .^)  ",
+          " \"\"  \"\" "
+        ].join("\n")
+      end
+
+      it 'should update the scoreboard' do
+        @formatter.scoreboard.size.should == 4
       end
 
     end
@@ -50,12 +53,11 @@ CAT
 
       it 'should alert Nyan Cat' do
         @formatter.example_pending(@example)
-        @formatter.nyan_cat.should == <<-CAT
-_,------,
-_|   /\\_/\\
-~|__( o .o)
-_""  ""
-CAT
+        @formatter.nyan_cat.should == [ "_,------,   ",
+          "_|  /\\_/\\ ",
+          "~|_( o .o)  ",
+          " \"\"  \"\" "
+        ].join("\n")
       end
 
     end
@@ -74,12 +76,11 @@ CAT
 
       it 'should alert Nyan Cat' do
         @formatter.example_failed(@example)
-        @formatter.nyan_cat.should == <<-CAT
-_,------,
-_|   /\\_/\\
-~|__( o .o)
-_""  ""
-CAT
+        @formatter.nyan_cat.should == [ "_,------,   ",
+          "_|  /\\_/\\ ",
+          "~|_( o .o)  ",
+          " \"\"  \"\" "
+        ].join("\n")
       end
 
     end
@@ -91,14 +92,6 @@ CAT
       @formatter.stub!(:current).and_return(1)
       @formatter.stub!(:example_count).and_return(2)
       @formatter.tick
-    end
-
-    it 'should change title' do
-      @formatter.title.should == '  1/2'
-    end
-
-    it 'should calculate the percentage done' do
-      @formatter.percentage.should == 50
     end
 
     it 'should increment the current' do
