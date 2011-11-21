@@ -10,7 +10,7 @@ _-_-_-_-_-_-_-""  ""
 
 This is my take on the Nyan Cat RSpec Formatter. It simply creates a rainbow trail of test results. It also counts the number of examples as they execute and highlights failed and pending specs.
 
-The rainbow changes colors as it runs. See it in action [here](http://vimeo.com/32241727).
+The rainbow changes colors as it runs. See it in action [here](http://vimeo.com/32424001).
 
 ```
 rspec --format NyanCatFormatter
@@ -32,7 +32,7 @@ If you want to use Nyan Cat as your default formatter, simply put the options in
 Using with Rails rake spec
 ----------
 
-To use Nyan Cat with Rails "rake spec" you need to add Nyan Cat dependecy in your Gemfile. 
+To use Nyan Cat with Rails "rake spec" you need to add Nyan Cat dependecy in your Gemfile.
 
 ```
 group :test do
