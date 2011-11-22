@@ -45,7 +45,10 @@ class NyanCatFormatter < RSpec::Core::Formatters::BaseTextFormatter
     summary = "\nNyan Cat flew #{format_seconds(duration)} seconds".split(//).map { |c| rainbowify(c) }
     output.puts summary.join
     output.puts colorise_summary(summary_line(example_count, failure_count, pending_count))
-    dump_commands_to_rerun_failed_examples
+
+    if respond_to?(:dump_commands_to_rerun_failed_examples)
+      dump_commands_to_rerun_failed_examples
+    end
   end
 
   def dump_failures
