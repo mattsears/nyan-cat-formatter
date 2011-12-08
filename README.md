@@ -12,6 +12,8 @@ This is my take on the Nyan Cat RSpec Formatter. It simply creates a rainbow tra
 
 The rainbow changes colors as it runs. See it in action [here](http://vimeo.com/32424001).
 
+Works with RSpec 1.3 and RSpec 2.
+
 ```
 rspec --format NyanCatFormatter
 ```
