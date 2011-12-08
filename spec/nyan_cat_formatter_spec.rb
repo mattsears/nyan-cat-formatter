@@ -4,12 +4,18 @@ require 'stringio'
 describe NyanCatFormatter do
 
   before do
+    rspec_bin = $0.split('/').last
     @output = StringIO.new
-    formatter_options = OpenStruct.new(:colour => true, :dry_run => false, :autospec => nil)
-    @formatter = NyanCatFormatter.new(formatter_options, @output)
+    if rspec_bin == 'rspec'
+      @formatter = NyanCatFormatter.new(@output)
+      @example = RSpec::Core::ExampleGroup.describe.example
+    else
+      formatter_options = OpenStruct.new(:colour => true, :dry_run => false, :autospec => nil)
+      @formatter = NyanCatFormatter.new(formatter_options, @output)
+      @example = Spec::Example::ExampleProxy.new("should pass")
+      @formatter.instance_variable_set(:@example_group, OpenStruct.new(:description => "group"))
+    end
     @formatter.start(2)
-    @example = Spec::Example::ExampleProxy.new("should pass")
-    @formatter.instance_variable_set(:@example_group, OpenStruct.new(:description => "group")) 
     sleep(0.1)  # Just to slow it down a little :-)
   end
 
@@ -45,17 +51,16 @@ describe NyanCatFormatter do
 
       it 'should call the tick method' do
         @formatter.should_receive :tick
-        @formatter.example_pending(@example, "")
+        @formatter.example_pending(@example)
       end
 
       it 'should increment the pending count' do
-        pending_count = @formatter.instance_variable_get(:@pending_count)
-        @formatter.example_pending(@example, "")
-        (@formatter.instance_variable_get(:@pending_count) - pending_count).should == 1
+        lambda { @formatter.example_pending(@example)}.
+          should change(@formatter, :pending_count).by(1)
       end
 
       it 'should alert Nyan Cat' do
-        @formatter.example_pending(@example, "")
+        @formatter.example_pending(@example)
         @formatter.nyan_cat.should == [ "_,------,   ",
           "_|  /\\_/\\ ",
           "~|_( o .o)  ",
@@ -69,18 +74,16 @@ describe NyanCatFormatter do
 
       it 'should call the increment method' do
         @formatter.should_receive :tick
-        @formatter.example_failed(@example, 0, 0)
+        @formatter.example_failed(@example)
       end
 
       it 'should increment the failure count' do
-        failure_count = @formatter.instance_variable_get("@failure_count")
-        @formatter.example_failed(@example, 0, 0)
-        (@formatter.instance_variable_get("@failure_count") - failure_count).should == 1
+        lambda { @formatter.example_failed(@example)}.
+          should change(@formatter, :failure_count).by(1)
       end
 
       it 'should alert Nyan Cat' do
-        counter = failure = 0
-        @formatter.example_failed(@example, counter, failure)
+        @formatter.example_failed(@example)
         @formatter.nyan_cat.should == [ "_,------,   ",
           "_|  /\\_/\\ ",
           "~|_( o .o)  ",
@@ -129,7 +132,6 @@ describe NyanCatFormatter do
 
     it 'should mark pending examples as yellow' do
       @formatter.highlight('!').should == "\e[33m!\e[0m"
-      pending
     end
 
   end
@@ -137,7 +139,7 @@ describe NyanCatFormatter do
   describe 'start' do
 
     it 'should set the total amount of specs' do
-      @formatter.instance_variable_get("@example_count").should == 2
+      @formatter.example_count.should == 2
     end
 
     it 'should set the current to 0' do
