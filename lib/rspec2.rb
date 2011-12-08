@@ -2,7 +2,7 @@ module RSpec2
 
   def start(example_count)
     super(example_count)
-    @current, @color_index, @passing_count = 0,0,0
+    @current = @color_index = @passing_count = 0
     @example_results = []
   end
 

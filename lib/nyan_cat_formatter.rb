@@ -4,11 +4,11 @@ rspec_bin = $0.split('/').last
 if rspec_bin == 'rspec'
   ['rspec2','rspec/core/formatters/base_text_formatter'].each {|f| require f}
   parent_class = RSpec::Core::Formatters::BaseTextFormatter
-  nyan_module = RSpec2
+  rspec_module = RSpec2
 elsif rspec_bin == 'spec'
   ['spec', 'rspec1', 'spec/runner/formatter/base_text_formatter'].each {|f| require f}
   parent_class = Spec::Runner::Formatter::BaseTextFormatter
-  nyan_module = RSpec1
+  rspec_module = RSpec1
 end
 
 NyanCatFormatter = Class.new(parent_class) do
@@ -21,7 +21,7 @@ NyanCatFormatter = Class.new(parent_class) do
   ERROR    = '!'
   PENDING  = '+'
 
-  include nyan_module
+  include rspec_module
 
   attr_reader :current, :example_results, :color_index, :pending_count,
               :failure_count, :example_count

@@ -40,19 +40,16 @@ module RSpec1
   end
 
   def dump_summary(duration, example_count, failure_count, pending_count)
-    # dump_profile if profile_examples? && failure_count == 0
     @output.puts "\nNyan Cat flew #{duration} seconds\n".each_char.map {|c| rainbowify(c)}.join
     summary = "#{example_count} example#{'s' unless example_count == 1}, #{failure_count} failure#{'s' unless failure_count == 1}"
     summary << ", #{pending_count} pending" if pending_count > 0
 
     if failure_count == 0
-      if pending_count > 0
-        @output.puts yellow(summary)
-      else
-        @output.puts green(summary)
-      end
-    else
       @output.puts red(summary)
+    elsif pending_count > 0
+      @output.puts yellow(summary)
+    else
+      @output.puts green(summary)
     end
     @output.flush
   end
