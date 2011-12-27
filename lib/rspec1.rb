@@ -53,9 +53,4 @@ module RSpec1
     end
     @output.flush
   end
-
-  def dump_failures
-    #no op
-  end
-
 end
