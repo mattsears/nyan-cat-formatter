@@ -37,9 +37,4 @@ module RSpec2
       dump_commands_to_rerun_failed_examples
     end
   end
-
-  def dump_failures
-    #no op
-  end
-
 end
