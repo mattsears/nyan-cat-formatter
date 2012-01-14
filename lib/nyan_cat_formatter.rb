@@ -81,11 +81,15 @@ NyanCatFormatter = Class.new(parent_class) do
   end
 
   # A Unix trick using stty to get the console columns
-  # does not work in JRuby :-(
   #
   # @return [Fixnum]
   def terminal_width
-    @terminal_width ||= `stty size`.split.map { |x| x.to_i }.reverse.first - 1
+    if defined? JRUBY_VERSION
+      default_width = 80
+    else
+      default_width = `stty size`.split.map { |x| x.to_i }.reverse.first - 1
+    end
+    @terminal_width ||= default_width
   end
 
   # Creates a data store of pass, failed, and pending example results
