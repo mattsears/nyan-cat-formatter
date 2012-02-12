@@ -102,8 +102,8 @@ NyanCatFormatter = Class.new(parent_class) do
     padding = @example_count.to_s.length
     [ @current.to_s.rjust(padding),
       green((@current - @pending_examples.size - @failed_examples.size).to_s.rjust(padding)),
-      yellow(@pending_count.to_s.rjust(padding)),
-      red(@failure_count.to_s.rjust(padding)) ]
+      yellow(@pending_examples.size.to_s.rjust(padding)),
+      red(@failed_examples.size.to_s.rjust(padding)) ]
   end
 
   # Creates a rainbow trail
