@@ -40,7 +40,7 @@ module RSpec1
   end
 
   def dump_summary(duration, example_count, failure_count, pending_count)
-    @output.puts "\nNyan Cat flew #{duration} seconds\n".each_char.map {|c| rainbowify(c)}.join
+    @output.puts "\nYou've Nyaned for #{duration} seconds\n".each_char.map {|c| rainbowify(c)}.join
     summary = "#{example_count} example#{'s' unless example_count == 1}, #{failure_count} failure#{'s' unless failure_count == 1}"
     summary << ", #{pending_count} pending" if pending_count > 0
 
