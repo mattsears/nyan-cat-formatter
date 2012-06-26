@@ -13,13 +13,13 @@ module RSpec2
 
   def example_pending(example)
     super(example)
-    @pending_count =+1
+    @pending_count +=1
     tick PENDING
   end
 
   def example_failed(example)
     super(example)
-    @failure_count =+1
+    @failure_count +=1
     tick FAIL
   end
 
