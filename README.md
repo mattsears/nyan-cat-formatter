@@ -14,12 +14,28 @@ The rainbow changes colors as it runs. See it in action [here](http://vimeo.com/
 
 Works with RSpec 1.3 and RSpec 2.
 
-```
-rspec --format NyanCatFormatter
-```
+Using  Nyan Cat
+---------------
 
-Installing Nyan Cat
-----------
+You can either specify the formatting when using the `rspec` command:
+
+    rspec --format NyanCatFormatter
+
+Or add `--format NyanCatFormatter` to a `.rspec` file placed in your project's root directory,
+so that you won't have to specify the `--format` option everytime you run the command.
+
+###Using with Bundler
+
+To use Nyan Cat with a project that uses Bundler (Rails or Sinatra f.e.) you need to add Nyan Cat dependecy to your Gemfile:
+
+    group :test do
+      gem "nyan-cat-formatter"
+    end
+
+And then run `bundle install`.
+
+Installing it
+-------------
 
 ```
 $ gem install nyan-cat-formatter
@@ -29,22 +45,6 @@ If you want to use Nyan Cat as your default formatter, simply put the options in
 
 ```
 --format NyanCatFormatter
-```
-
-Using with Rails rake spec
-----------
-
-To use Nyan Cat with Rails "rake spec" you need to add Nyan Cat dependecy in your Gemfile.
-
-```
-group :test do
-  gem "nyan-cat-formatter"
-end
-```
-And then
-
-```
-bundle install
 ```
 
 Contributing
