@@ -47,6 +47,13 @@ If you want to use Nyan Cat as your default formatter, simply put the options in
 --format NyanCatFormatter
 ```
 
+Playing the Nyan Cat ong 
+-------------------------
+
+If you want to play the Nyan Cat song in tandom with nyan-cat-formatter, simply copy the ".nyan-cat.mp3" file to your home directory.
+
+This currently only works on Mac OSx.
+
 Contributing
 ----------
 
