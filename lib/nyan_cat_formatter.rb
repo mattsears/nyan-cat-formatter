@@ -11,6 +11,8 @@ else
   rspec_module = RSpec2
 end
 
+system("afplay ~/.nyan-cat.mp3 &") if File.exists?(File.expand_path("~/.nyan-cat.mp3")) && RUBY_PLATFORM.downcase.include?("darwin")
+
 NyanCatFormatter = Class.new(parent_class) do
 
   ESC      = "\e["
@@ -171,6 +173,5 @@ NyanCatFormatter = Class.new(parent_class) do
     else mark
     end
   end
-
 end
 
