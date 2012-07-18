@@ -9,5 +9,5 @@ Play = Class.new(NyanCatFormatter) do
     def self.osx?
       RUBY_PLATFORM.downcase.include?("darwin")
     end
-  system("afplay #{File.expand_path('~/.nyan-cat.mp3')} &") if local_file_exists? && osx?
+  system("afplay .nyan-cat.mp3 &") if local_file_exists? && osx?
 end
