@@ -52,7 +52,7 @@ Playing the Nyan Cat song
 
 If you want to play the Nyan Cat song in tandom with nyan-cat-formatter, there are two options:
 
-1. Play the song by default:
+**1. Play the song by default:**
 
 Remove the following option from your .rspec file:
 
@@ -66,7 +66,7 @@ And add the following option to your .rspec file:
 --format Play
 ```
 
-2. Play the song only when desired using a command line option:
+**2. Play the song only when desired using a command line option:**
 
 Make sure the following option is in your .rspec file:
 
