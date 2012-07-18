@@ -6,10 +6,6 @@ Play = Class.new(NyanCatFormatter) do
       File.exists?(".nyan-cat.mp3")
     end
 
-    def self.home_dir_file_exists?
-      File.exists?(File.expand_path("~/.nyan-cat.mp3"))
-    end
-  
     def self.osx?
       RUBY_PLATFORM.downcase.include?("darwin")
     end

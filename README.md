@@ -74,7 +74,7 @@ Make sure the following option is in your .rspec file:
 --format NyanCatFormatter
 ```
 
-And use the following command when running specs:
+And use the following command when running specs (`-f Play` is case-sensitive):
 
 ```
 $ rspec spec -f Play
