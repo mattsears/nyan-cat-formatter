@@ -52,7 +52,7 @@ Playing the Nyan Cat song
 
 If you want to play the Nyan Cat song in tandom with nyan-cat-formatter, there are two options:
 
-**1. Play the song by default:**
+**1. Play the song by default whenever you use rspec:**
 
 Remove the following option from your .rspec file:
 
@@ -65,6 +65,8 @@ And add the following option to your .rspec file:
 ```
 --format Play
 ```
+
+Then run `rspec spec` and enjoy the beautiful site of Nyan Cat racing across your terminal accompanied by the Nyan Cat song!
 
 **2. Play the song only when desired using a command line option:**
 
@@ -80,7 +82,9 @@ And use the following command when running specs (`-f Play` is case-sensitive):
 $ rspec spec -f Play
 ```
 
-This currently only works on Mac OSx.
+Then run `rspec spec` and enjoy the beautiful site of Nyan Cat racing across your terminal accompanied by the Nyan Cat song!
+
+**This currently only works on Mac OSx.**
 
 Contributing
 ----------
