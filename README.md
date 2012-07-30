@@ -50,8 +50,6 @@ If you want to use Nyan Cat as your default formatter, simply put the options in
 Playing the Nyan Cat song 
 -------------------------
 
-If you want to play the Nyan Cat song in tandom with Nyan Cat Formatter, simply copy the .nyan-cat.mp3 file to your home directory.
-
 You can then enjoy playback in two ways:
 
 **1. Play the song only when desired using a command line option:**
@@ -59,7 +57,7 @@ You can then enjoy playback in two ways:
 Use the following command to run your specs:
 
 ```
-$ rspec spec -f Play
+$ rspec spec -f NyanCatMusicFormatter
 ```
 
 And enjoy the site of Nyan Cat running across your terminal to the Nyan Cat song!
@@ -70,7 +68,7 @@ Make sure your .rspec file in your application's root directory contains the fol
 
 ```
 --color
---format Play
+--format NyanCatMusicFormatter
 ```
 
 Then run `rspec spec` and enjoy Nyan Cat formatted text output accompanied by the Nyan Cat song by default!
