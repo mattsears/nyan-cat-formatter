@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 require 'nyan_cat_formatter'
-require 'rubygems'
 
 NyanCatMusicFormatter = Class.new(NyanCatFormatter) do
   def osx?
