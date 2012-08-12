@@ -34,10 +34,11 @@ describe NyanCatFormatter do
 
       it 'should relax Nyan Cat' do
         @formatter.example_passed(@example)
-        @formatter.nyan_cat.should == [ "_,------,   ",
-          "_|  /\\_/\\ ",
-          "~|_( ^ .^)  ",
-          " \"\"  \"\" "
+        @formatter.nyan_cat.should == [
+          '_,------,   ',
+          '_|  /\_/\ ',
+          '~|_( ^ .^)  ',
+          ' ""  "" '
         ].join("\n")
       end
 
@@ -61,10 +62,11 @@ describe NyanCatFormatter do
 
       it 'should alert Nyan Cat' do
         @formatter.example_pending(@example)
-        @formatter.nyan_cat.should == [ "_,------,   ",
-          "_|  /\\_/\\ ",
-          "~|_( o .o)  ",
-          " \"\"  \"\" "
+        @formatter.nyan_cat.should == [
+          '_,------,   ',
+          '_|  /\_/\ ',
+          '~|_( o .o)  ',
+          ' ""  "" '
         ].join("\n")
       end
 
@@ -84,10 +86,11 @@ describe NyanCatFormatter do
 
       it 'should alert Nyan Cat' do
         @formatter.example_failed(@example)
-        @formatter.nyan_cat.should == [ "_,------,   ",
-          "_|  /\\_/\\ ",
-          "~|_( o .o)  ",
-          " \"\"  \"\" "
+        @formatter.nyan_cat.should == [
+          '_,------,   ',
+          '_|  /\_/\ ',
+          '~|_( o .o)  ',
+          ' ""  "" '
         ].join("\n")
       end
 
