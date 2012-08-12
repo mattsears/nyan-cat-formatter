@@ -47,6 +47,34 @@ If you want to use Nyan Cat as your default formatter, simply put the options in
 --format NyanCatFormatter
 ```
 
+Playing the Nyan Cat song 
+-------------------------
+
+You can then enjoy playback in two ways:
+
+**1. Play the song only when desired using a command line option:**
+
+Use the following command to run your specs:
+
+```
+$ rspec spec -f NyanCatMusicFormatter
+```
+
+And enjoy the site of Nyan Cat running across your terminal to the Nyan Cat song!
+
+**2. Play the song by default when you run your specs:**
+
+Make sure your .rspec file in your application's root directory contains the following:
+
+```
+--color
+--format NyanCatMusicFormatter
+```
+
+Then run `rspec spec` and enjoy Nyan Cat formatted text output accompanied by the Nyan Cat song by default!
+
+**This currently only works on Mac OSx.**
+
 Contributing
 ----------
 

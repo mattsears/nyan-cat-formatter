@@ -2,11 +2,11 @@
 
 rspec_bin = $0.split('/').last
 if rspec_bin == 'spec'
-  ['spec', 'rspec1', 'spec/runner/formatter/base_text_formatter'].each {|f| require f}
+  ['spec', 'nyan_cat_formatter/rspec1', 'spec/runner/formatter/base_text_formatter'].each {|f| require f}
   parent_class = Spec::Runner::Formatter::BaseTextFormatter
   rspec_module = RSpec1
 else
-  ['rspec2','rspec/core/formatters/base_text_formatter'].each {|f| require f}
+  ['nyan_cat_formatter/rspec2', 'rspec/core/formatters/base_text_formatter'].each {|f| require f}
   parent_class = RSpec::Core::Formatters::BaseTextFormatter
   rspec_module = RSpec2
 end
@@ -171,6 +171,5 @@ NyanCatFormatter = Class.new(parent_class) do
     else mark
     end
   end
-
 end
 
