@@ -14,7 +14,7 @@ end
 
 describe NyanCatMusicFormatter do
   def path_to_mp3
-    File.expand_path '../../data/nyan-cat.mp3', __FILE__
+    "'#{ROOT}/data/nyan-cat.mp3'"
   end
 
   let(:stdout)      { StringIO.new }

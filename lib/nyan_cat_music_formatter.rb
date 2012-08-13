@@ -24,6 +24,6 @@ NyanCatMusicFormatter = Class.new(NyanCatFormatter) do
 
   def start input
     super
-    kernel.system("afplay #{File.expand_path '../../data/nyan-cat.mp3', __FILE__} &") if osx?
+    kernel.system("afplay '#{ROOT}/data/nyan-cat.mp3' &") if osx?
   end
 end
