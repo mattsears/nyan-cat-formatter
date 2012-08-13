@@ -4,7 +4,7 @@ ROOT = "#{File.dirname(__FILE__)}" unless defined?(ROOT)
 
 Gem::Specification.new do |s|
   s.name        = "nyan-cat-formatter"
-  s.version     = "0.0.7"
+  s.version     = "0.0.8"
   s.authors     = ["Matt Sears"]
   s.email       = ["matt@mattsears.com"]
   s.homepage    = "http://mtts.rs/nyancat"
