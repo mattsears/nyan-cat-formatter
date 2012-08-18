@@ -1,7 +1,5 @@
 $:.push File.expand_path("../lib", __FILE__)
 
-ROOT = "#{File.dirname(__FILE__)}" unless defined?(ROOT)
-
 Gem::Specification.new do |s|
   s.name        = "nyan-cat-formatter"
   s.version     = "0.0.8"
