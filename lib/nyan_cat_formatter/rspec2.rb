@@ -28,7 +28,8 @@ module RSpec2
   end
 
   def dump_summary(duration, example_count, failure_count, pending_count)
-    system("killall -9 afplay") if File.exists?( File.expand_path("data/nyan-cat.mp3") ) && RUBY_PLATFORM.downcase.include?("darwin")
+    mp3_file = File.expand_path( File.join( File.dirname(__FILE__), "../../data/nyan-cat.mp3"))
+    system("killall -9 afplay") if File.exists?(mp3_file) && RUBY_PLATFORM.downcase.include?("darwin")
     dump_profile if profile_examples? && failure_count == 0
     summary = "\nYou've Nyaned for #{format_seconds(duration)} seconds\n".split(//).map { |c| rainbowify(c) }
     output.puts summary.join
