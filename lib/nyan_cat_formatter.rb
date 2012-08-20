@@ -176,8 +176,8 @@ NyanCatFormatter = Class.new(parent_class) do
   #
   # @return [String]
   def format_duration(duration)
-    seconds = (duration % 60).round(2)
-    seconds = seconds.to_i if seconds.to_i == seconds # drop that zero if it's not needed
+    seconds = ((duration % 60) * 100.0).round / 100.0   # 1.8.7 safe .round(2)
+    seconds = seconds.to_i if seconds.to_i == seconds   # drop that zero if it's not needed
     
     message = "#{seconds} second#{seconds == 1 ? "" : "s"}"
     message = "#{(duration / 60).to_i} minute#{(duration / 60).to_i == 1 ? "" : "s"} and " + message if duration >= 60
