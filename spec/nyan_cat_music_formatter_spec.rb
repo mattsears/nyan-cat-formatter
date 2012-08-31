@@ -64,6 +64,14 @@ describe NyanCatMusicFormatter do
       end
     end
 
+    context 'when on linux' do
+      before { formatter.platform = 'linux'}
+      it 'plays the song for linux too' do
+        formatter.start 10
+        mock_kernel.seen.any? { |entry| entry. end_with? "mpg321 #{path_to_mp3} &>/dev/null &" }.should be
+      end
+    end
+
     context 'when not on OS X' do
       before { formatter.platform = 'windows' }
 
