@@ -3,7 +3,7 @@ require 'nyan_cat_formatter'
 
 NyanCatMusicFormatter = Class.new(NyanCatFormatter) do
   def osx?
-    platform.include?("darwin")
+    platform.downcase.include?("darwin")
   end
 
   def kernel=(kernel)
