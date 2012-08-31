@@ -37,7 +37,7 @@ describe NyanCatMusicFormatter do
 
   describe 'platform' do
     it 'defaults to RUBY_PLATFORM' do
-      described_class.new(stdout).platform.should equal RUBY_PLATFORM
+      described_class.new(stdout).platform.should eq RUBY_PLATFORM
     end
 
     it 'can be set' do
