@@ -13,10 +13,7 @@ class MockKernel
 end
 
 describe NyanCatMusicFormatter do
-  def path_to_mp3
-    "#{File.expand_path('data/nyan-cat.mp3')}"
-  end
-
+  let(:path_to_mp3) { NyanCatMusicFormatter.new(NyanCatFormatter).nyan_mp3 }
   let(:stdout)      { StringIO.new }
   let(:formatter)   { described_class.new stdout }
   let(:mock_kernel) { MockKernel.new }

@@ -22,8 +22,13 @@ NyanCatMusicFormatter = Class.new(NyanCatFormatter) do
     @platform ||= RUBY_PLATFORM
   end
 
+  def nyan_mp3
+    File.expand_path('../../data/nyan-cat.mp3', __FILE__)
+  end
+
   def start input
     super
     kernel.system("afplay #{File.expand_path('../../data/nyan-cat.mp3', __FILE__)} &") if osx?
+    kernel.system("afplay #{nyan_mp3} &") if osx?
   end
 end
