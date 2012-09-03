@@ -41,9 +41,11 @@ NyanCatFormatter = Class.new(parent_class) do
   #
   # @return [String] Nyan Cat
   def nyan_cat
-    if @failure_count.to_i > 0 || @pending_count.to_i > 0
+    if self.failed_or_pending? && self.finished?
+      ascii_cat('x')[@color_index%2].join("\n") #'~|_(x.x)'
+    elsif self.failed_or_pending?
       ascii_cat('o')[@color_index%2].join("\n") #'~|_(o.o)'
-    elsif (@current == @example_count)
+    elsif self.finished?
       ascii_cat('-')[@color_index%2].join("\n") # '~|_(-.-)'
     else
       ascii_cat('^')[@color_index%2].join("\n") # '~|_(^.^)'
@@ -178,12 +180,27 @@ NyanCatFormatter = Class.new(parent_class) do
   def format_duration(duration)
     seconds = ((duration % 60) * 100.0).round / 100.0   # 1.8.7 safe .round(2)
     seconds = seconds.to_i if seconds.to_i == seconds   # drop that zero if it's not needed
-    
+
     message = "#{seconds} second#{seconds == 1 ? "" : "s"}"
     message = "#{(duration / 60).to_i} minute#{(duration / 60).to_i == 1 ? "" : "s"} and " + message if duration >= 60
-    
+
     message
   end
-  
+
+
+  # Determines if the specs have completed
+  #
+  # @returns [Boolean] true if finished; false otherwise
+  def finished?
+    (@current == @example_count)
+  end
+
+  # Determines if the any specs failed or are in pending state
+  #
+  # @returns [Boolean] true if failed or pending; false otherwise
+  def failed_or_pending?
+    (@failure_count.to_i > 0 || @pending_count.to_i > 0)
+  end
+
 end
 

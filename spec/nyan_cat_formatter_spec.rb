@@ -94,6 +94,17 @@ describe NyanCatFormatter do
         ].join("\n")
       end
 
+      it 'should kill nyan if the specs are finished' do
+        @formatter.example_failed(@example)
+        @formatter.stub(:finished?).and_return(true)
+        @formatter.nyan_cat.should == [
+          '_,------,   ',
+          '_|  /\_/\ ',
+          '~|_( x .x)  ',
+          ' ""  "" '
+        ].join("\n")
+      end
+
     end
   end
 
@@ -155,19 +166,19 @@ describe NyanCatFormatter do
     it "should return just seconds for sub 60 seconds" do
       @formatter.format_duration(5.3).should eq("5.3 seconds")
     end
-    
+
     it "should remove that extra zero if it is not needed" do
       @formatter.format_duration(1.0).should eq("1 second")
     end
-    
+
     it "should plurlaize seconds" do
       @formatter.format_duration(1.1).should eq("1.1 seconds")
     end
-    
+
     it "add a minute if it is just over 60 seconds" do
       @formatter.format_duration(63.2543456456).should eq("1 minute and 3.25 seconds")
     end
-    
+
     it "should pluralize minutes" do
       @formatter.format_duration(987.34).should eq("16 minutes and 27.34 seconds")
     end
