@@ -47,7 +47,7 @@ If you want to use Nyan Cat as your default formatter, simply put the options in
 --format NyanCatFormatter
 ```
 
-Playing the Nyan Cat song 
+Playing the Nyan Cat song
 -------------------------
 
 You can then enjoy playback in two ways:
@@ -73,7 +73,7 @@ Make sure your .rspec file in your application's root directory contains the fol
 
 Then run `rspec spec` and enjoy Nyan Cat formatted text output accompanied by the Nyan Cat song by default!
 
-**This currently only works on Mac OSx.**
+**This currently only works on Mac OS X or on Linux (if you have mpg321 installed).**
 
 Contributing
 ----------

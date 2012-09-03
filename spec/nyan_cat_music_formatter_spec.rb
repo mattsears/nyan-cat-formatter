@@ -13,10 +13,7 @@ class MockKernel
 end
 
 describe NyanCatMusicFormatter do
-  def path_to_mp3
-    "#{File.expand_path('data/nyan-cat.mp3')}"
-  end
-
+  let(:path_to_mp3) { NyanCatMusicFormatter.new(NyanCatFormatter).nyan_mp3 }
   let(:stdout)      { StringIO.new }
   let(:formatter)   { described_class.new stdout }
   let(:mock_kernel) { MockKernel.new }
@@ -37,7 +34,7 @@ describe NyanCatMusicFormatter do
 
   describe 'platform' do
     it 'defaults to RUBY_PLATFORM' do
-      described_class.new(stdout).platform.should equal RUBY_PLATFORM
+      described_class.new(stdout).platform.should eq RUBY_PLATFORM
     end
 
     it 'can be set' do
@@ -64,6 +61,14 @@ describe NyanCatMusicFormatter do
       it 'plays the song in the background' do
         formatter.start 3
         mock_kernel.seen.should include "afplay #{path_to_mp3} &"
+      end
+    end
+
+    context 'when on linux' do
+      before { formatter.platform = 'linux'}
+      it 'plays the song for linux too' do
+        formatter.start 10
+        mock_kernel.seen.any? { |entry| entry. end_with? "mpg321 #{path_to_mp3} &>/dev/null &" }.should be
       end
     end
 
