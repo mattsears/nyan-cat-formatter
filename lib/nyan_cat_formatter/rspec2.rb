@@ -28,7 +28,7 @@ module RSpec2
   end
 
   def dump_summary(duration, example_count, failure_count, pending_count)
-    NyanCatMusicFormatter.new(NyanCatFormatter).kill_music if NyanCatMusicFormatter
+    NyanCatMusicFormatter.new(NyanCatFormatter).kill_music if defined? NyanCatMusicFormatter
     dump_profile if profile_examples? && failure_count == 0
     summary = "\nYou've Nyaned for #{format_duration(duration)}\n".split(//).map { |c| rainbowify(c) }
     output.puts summary.join
