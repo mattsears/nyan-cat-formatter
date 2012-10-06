@@ -33,13 +33,26 @@ NyanCatMusicFormatter = Class.new(NyanCatFormatter) do
   def start input
     super
     kernel.system("afplay #{nyan_mp3} &") if osx?
-    kernel.system("[ -e #{nyan_mp3} ] && type mpg321 &>/dev/null && mpg321 #{nyan_mp3} &>/dev/null &") if linux?
+    play_on_linux if linux?
   end
 
   def kill_music
     if File.exists? nyan_mp3
       system("killall -9 afplay &>/dev/null") if osx?
-      system("killall -9 mpg321 &>/dev/null") if linux?
+      kill_music_on_linux if linux?
     end
   end
+
+  private
+    
+  def play_on_linux
+    kernel.system("[ -e #{nyan_mp3} ] && type mpg321 &>/dev/null && mpg321 #{nyan_mp3} &>/dev/null &") if kernel.system('which mpg321 &>/dev/null && type mpg321 &>/dev/null')
+    kernel.system("[ -e #{nyan_mp3} ] && type mpg123 &>/dev/null && mpg123 #{nyan_mp3} &>/dev/null &") if kernel.system('which mpg123 &>/dev/null && type mpg123 &>/dev/null')
+  end
+
+  def kill_music_on_linux 
+    system("killall -9 mpg321 &>/dev/null") if kernel.system("which mpg321 &>/dev/null && type mpg321 &>/dev/null")
+    system("killall -9 mpg123 &>/dev/null") if kernel.system("which mpg123 &>/dev/null && type mpg123 &>/dev/null")
+  end
+
 end
