@@ -77,9 +77,14 @@ NyanCatFormatter = Class.new(parent_class) do
   #
   # @return [Fixnum]
   def current_width
-    padding    = @example_count.to_s.length * 2 + 6
-    cat_length = nyan_cat.split("\n").group_by(&:size).max.first
-    padding    + @current + cat_length
+    padding_width + example_width + cat_length
+  end
+
+  # Gets the padding for the current example count
+  #
+  # @return [Fixnum]
+  def padding_width
+    @example_count.to_s.length * 2 + 6
   end
 
   # A Unix trick using stty to get the console columns
@@ -112,11 +117,16 @@ NyanCatFormatter = Class.new(parent_class) do
   #
   # @return [String] the sprintf format of the Nyan cat
   def nyan_trail
-    marks = @example_results.map{ |mark| highlight(mark) }
+    marks = @example_results.map.with_index{ |mark, i| highlight(mark) * example_width(i) }
     marks.shift(current_width - terminal_width) if current_width >= terminal_width
     nyan_cat_lines = nyan_cat.split("\n").each_with_index.map do |line, index|
       format("%s#{line}", marks.join)
     end.join("\n")
+  end
+
+  # Times a mark has to be repeated
+  def example_width(item = 1)
+    1
   end
 
   # Ascii version of Nyan cat. Two cats in the array allow Nyan to animate running.
@@ -200,6 +210,13 @@ NyanCatFormatter = Class.new(parent_class) do
   # @returns [Boolean] true if failed or pending; false otherwise
   def failed_or_pending?
     (@failure_count.to_i > 0 || @pending_count.to_i > 0)
+  end
+
+  # Returns the cat length
+  #
+  # @returns [Fixnum]
+  def cat_length
+    nyan_cat.split("\n").group_by(&:size).max.first
   end
 
 end
