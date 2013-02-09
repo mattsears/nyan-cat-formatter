@@ -2,8 +2,8 @@
 require 'nyan_cat_formatter'
 
 NyanCatWideFormatter = Class.new(NyanCatFormatter) do
-  def example_width(item = current)
-    net_width_for(item) - net_width_for(item - 1)
+  def example_width(example = current)
+    net_width_for(example) - net_width_for(example - 1)
   end
 
   def net_width_for(example)
