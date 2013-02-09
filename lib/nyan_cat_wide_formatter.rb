@@ -7,9 +7,13 @@ NyanCatWideFormatter = Class.new(NyanCatFormatter) do
   end
 
   def net_width_for(example)
-    return 0 if example < 0
-    net_width = terminal_width - padding_width - cat_length
-    rough_example_width = (net_width * example.to_f / @example_count.to_f)
-    rough_example_width.round
+    @net_width ||= {}
+
+    @net_width[example] ||= begin
+      return 0 if example < 0
+      net_width = terminal_width - padding_width - cat_length
+      rough_example_width = (net_width * example.to_f / @example_count.to_f)
+      rough_example_width.round
+    end
   end
 end
