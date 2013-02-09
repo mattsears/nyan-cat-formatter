@@ -75,6 +75,20 @@ Then run `rspec spec` and enjoy Nyan Cat formatted text output accompanied by th
 
 **This currently only works on Mac OS X or on Linux (if you have mpg321 or mpg123 installed).**
 
+Using the Nyan Cat Wide Formatter
+---------------------------------
+
+The classic Nyan Cat Formatter uses a terminal column per test. One
+test, and single step that the cat goes ahead. The **Nyan Cat Wide
+Formatter**, instead, uses the whole terminal width, so the cat will
+always end up reaching the end of the terminal.
+
+Simple use it by configuring it as the RSpec formatter:
+
+```
+--format NyanCatWideFormatter
+```
+
 Contributing
 ----------
 

@@ -183,4 +183,23 @@ describe NyanCatFormatter do
       @formatter.format_duration(987.34).should eq("16 minutes and 27.34 seconds")
     end
   end
+
+  describe "example width" do
+    [15, 36, 60].each do |n|
+      context "for #{n} examples" do
+        before { @formatter.start(n) }
+
+        [0.25, 0.5, 0.75].each do |p|
+          i = (n * p).to_i
+          before { i.times { @formatter.tick } }
+
+          context "when in example #{i}" do
+            it "should return 1 as the example width" do
+              @formatter.example_width.should == 1
+            end
+          end
+        end
+      end
+    end
+  end
 end
