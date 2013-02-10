@@ -117,7 +117,7 @@ NyanCatFormatter = Class.new(parent_class) do
   #
   # @return [String] the sprintf format of the Nyan cat
   def nyan_trail
-    marks = @example_results.map.with_index{ |mark, i| highlight(mark) * example_width(i) }
+    marks = @example_results.each_with_index.map{ |mark, i| highlight(mark) * example_width(i) }
     marks.shift(current_width - terminal_width) if current_width >= terminal_width
     nyan_cat_lines = nyan_cat.split("\n").each_with_index.map do |line, index|
       format("%s#{line}", marks.join)
