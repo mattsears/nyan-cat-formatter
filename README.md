@@ -102,5 +102,4 @@ Once you've made your great commits:
 
 Author
 ----------
-[Matt Sears](https://wwww.mattsears.com) :: @mattsears
-
+[Matt Sears](http://www.mattsears.com) :: @mattsears
