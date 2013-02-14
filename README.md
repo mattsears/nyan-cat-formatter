@@ -1,12 +1,7 @@
 Nyan Cat RSpec Formatter [![Build Status](https://secure.travis-ci.org/mattsears/nyan-cat-formatter.png)](http://travis-ci.org/mattsears/nyan-cat-formatter)
 ========
 
-```
--_-_-_-_-_-_-_,------,
-_-_-_-_-_-_-_-|   /\_/\
--_-_-_-_-_-_-~|__( ^ .^)
-_-_-_-_-_-_-_-""  ""
-```
+![NYAN](nyan_example.gif)
 
 This is my take on the Nyan Cat RSpec Formatter. It simply creates a rainbow trail of test results. It also counts the number of examples as they execute and highlights failed and pending specs.
 
