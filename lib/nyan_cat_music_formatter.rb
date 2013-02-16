@@ -2,6 +2,8 @@
 require 'nyan_cat_formatter'
 
 NyanCatMusicFormatter = Class.new(NyanCatFormatter) do
+  MUSIC_LENGTH = 27.06 # seconds
+
   def osx?
     platform.downcase.include?("darwin")
   end
@@ -32,14 +34,29 @@ NyanCatMusicFormatter = Class.new(NyanCatFormatter) do
 
   def start input
     super
-    kernel.system("afplay #{nyan_mp3} &") if osx?
-    play_on_linux if linux?
+    t = Thread.new do
+      loop do
+        if osx?
+          kernel.system("afplay #{nyan_mp3} &")
+        elsif linux?
+          play_on_linux
+        end
+        Thread.current["started_playing"] ||= true
+        sleep MUSIC_LENGTH
+      end
+    end
+    until t["started_playing"]
+      sleep 0.001
+    end
   end
 
   def kill_music
     if File.exists? nyan_mp3
-      system("killall -9 afplay &>/dev/null") if osx?
-      kill_music_on_linux if linux?
+      if osx?
+        system("killall -9 afplay &>/dev/null")
+      elsif linux?
+        kill_music_on_linux
+      end
     end
   end
 
