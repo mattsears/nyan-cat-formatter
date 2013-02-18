@@ -5,7 +5,7 @@ Gem::Specification.new do |s|
   s.version     = "0.4.0"
   s.authors     = ["Matt Sears"]
   s.email       = ["matt@mattsears.com"]
-  s.homepage    = "http://mtts.rs/nyancat"
+  s.homepage    = "https://github.com/mattsears/nyan-cat-formatter"
   s.summary     = %q{Nyan Cat inspired RSpec formatter! }
   s.description = %q{Nyan Cat inspired RSpec formatter! }
 
