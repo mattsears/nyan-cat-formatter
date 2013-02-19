@@ -23,9 +23,11 @@ so that you won't have to specify the `--format` option everytime you run the co
 
 To use Nyan Cat with a project that uses Bundler (Rails or Sinatra f.e.) you need to add Nyan Cat dependecy to your Gemfile:
 
-    group :test do
-      gem "nyan-cat-formatter"
-    end
+```ruby
+group :test do
+  gem "nyan-cat-formatter"
+end
+```
 
 And then run `bundle install`.
 
