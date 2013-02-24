@@ -46,11 +46,11 @@ module RSpec1
     summary << ", #{pending_count} pending" if pending_count > 0
 
     if failure_count == 0
-      @output.puts red(summary)
+      @output.puts failure_color(summary)
     elsif pending_count > 0
-      @output.puts yellow(summary)
+      @output.puts pending_color(summary)
     else
-      @output.puts green(summary)
+      @output.puts success_color(summary)
     end
     @output.flush
   end

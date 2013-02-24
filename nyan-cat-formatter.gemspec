@@ -6,8 +6,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Matt Sears"]
   s.email       = ["matt@mattsears.com"]
   s.homepage    = "https://github.com/mattsears/nyan-cat-formatter"
-  s.summary     = %q{Nyan Cat inspired RSpec formatter! }
-  s.description = %q{Nyan Cat inspired RSpec formatter! }
+  s.summary     = %q{Nyan Cat inspired RSpec formatter!}
+  s.description = s.summary
 
   s.rubyforge_project = "nyan-cat-formatter"
 
@@ -18,5 +18,5 @@ Gem::Specification.new do |s|
 
   # specify any dependencies here; for example:
   s.add_development_dependency "rake"
-  s.add_development_dependency "rspec"
+  s.add_development_dependency "rspec", ">= 2.13"
 end
