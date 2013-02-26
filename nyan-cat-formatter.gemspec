@@ -2,7 +2,7 @@ $:.push File.expand_path("../lib", __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = "nyan-cat-formatter"
-  s.version     = "0.4.0"
+  s.version     = "0.5.0"
   s.authors     = ["Matt Sears"]
   s.email       = ["matt@mattsears.com"]
   s.homepage    = "https://github.com/mattsears/nyan-cat-formatter"
