@@ -142,7 +142,7 @@ NyanCatFormatter = Class.new(parent_class) do
       [ "_,------,   ",
         "_|   /\\_/\\",
         "^|__( #{o} .#{o}) ",
-        "  \"\"  \"\"    "
+        " \" \"  \" \""
       ]]
   end
 
