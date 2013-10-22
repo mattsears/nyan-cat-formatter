@@ -10,8 +10,8 @@ describe NyanCatWideFormatter do
 
   describe "cat situation" do
     before do
-      @formatter.stub!(:terminal_width).and_return(100)
-      @formatter.stub!(:cat_length).and_return(11)
+      @formatter.stub(:terminal_width).and_return(100)
+      @formatter.stub(:cat_length).and_return(11)
       @whole_net_width = 100 - 2*2 - 6 - 11
     end
 
