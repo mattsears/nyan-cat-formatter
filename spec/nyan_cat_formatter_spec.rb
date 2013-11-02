@@ -22,7 +22,7 @@ describe NyanCatFormatter do
   describe 'passed, pending and failed' do
 
     before do
-      @formatter.stub!(:tick)
+      @formatter.stub(:tick)
     end
 
     describe 'example_passed' do
@@ -111,8 +111,8 @@ describe NyanCatFormatter do
   describe 'tick' do
 
     before do
-      @formatter.stub!(:current).and_return(1)
-      @formatter.stub!(:example_count).and_return(2)
+      @formatter.stub(:current).and_return(1)
+      @formatter.stub(:example_count).and_return(2)
       @formatter.tick
     end
 
