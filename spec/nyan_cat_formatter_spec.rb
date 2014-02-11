@@ -22,52 +22,52 @@ describe NyanCatFormatter do
   describe 'passed, pending and failed' do
 
     before do
-      @formatter.stub(:tick)
+      allow(@formatter).to receive(:tick)
     end
 
     describe 'example_passed' do
 
       it 'should call the increment method' do
-        @formatter.should_receive :tick
+        expect(@formatter).to receive(:tick)
         @formatter.example_passed(@example)
       end
 
       it 'should relax Nyan Cat' do
         @formatter.example_passed(@example)
-        @formatter.nyan_cat.should == [
+        expect(@formatter.nyan_cat).to eq([
           '_,------,   ',
           '_|  /\_/\ ',
           '~|_( ^ .^)  ',
           ' ""  "" '
-        ].join("\n")
+        ].join("\n"))
       end
 
       it 'should update the scoreboard' do
-        @formatter.scoreboard.size.should == 4
+        expect(@formatter.scoreboard.size).to eq(4)
       end
-
     end
 
     describe 'example_pending' do
 
       it 'should call the tick method' do
-        @formatter.should_receive :tick
+        expect(@formatter).to receive(:tick)
         @formatter.example_pending(@example)
       end
 
       it 'should increment the pending count' do
-        lambda { @formatter.example_pending(@example)}.
-          should change(@formatter, :pending_count).by(1)
+        expect {
+          @formatter.example_pending(@example)
+        }.to change(@formatter, :pending_count).by(1)
       end
 
       it 'should alert Nyan Cat' do
         @formatter.example_pending(@example)
-        @formatter.nyan_cat.should == [
+        expect(@formatter.nyan_cat).to eq([
           '_,------,   ',
           '_|  /\_/\ ',
           '~|_( o .o)  ',
           ' ""  "" '
-        ].join("\n")
+        ].join("\n"))
       end
 
     end
@@ -75,34 +75,35 @@ describe NyanCatFormatter do
     describe 'example_failed' do
 
       it 'should call the increment method' do
-        @formatter.should_receive :tick
+        expect(@formatter).to receive(:tick)
         @formatter.example_failed(@example)
       end
 
       it 'should increment the failure count' do
-        lambda { @formatter.example_failed(@example)}.
-          should change(@formatter, :failure_count).by(1)
+        expect {
+          @formatter.example_failed(@example)
+        }.to change(@formatter, :failure_count).by(1)
       end
 
       it 'should alert Nyan Cat' do
         @formatter.example_failed(@example)
-        @formatter.nyan_cat.should == [
+        expect(@formatter.nyan_cat).to eq([
           '_,------,   ',
           '_|  /\_/\ ',
           '~|_( o .o)  ',
           ' ""  "" '
-        ].join("\n")
+        ].join("\n"))
       end
 
       it 'should kill nyan if the specs are finished' do
         @formatter.example_failed(@example)
-        @formatter.stub(:finished?).and_return(true)
-        @formatter.nyan_cat.should == [
+        allow(@formatter).to receive(:finished?).and_return(true)
+        expect(@formatter.nyan_cat).to eq([
           '_,------,   ',
           '_|  /\_/\ ',
           '~|_( x .x)  ',
           ' ""  "" '
-        ].join("\n")
+        ].join("\n"))
       end
 
     end
@@ -111,17 +112,17 @@ describe NyanCatFormatter do
   describe 'tick' do
 
     before do
-      @formatter.stub(:current).and_return(1)
-      @formatter.stub(:example_count).and_return(2)
+      allow(@formatter).to receive(:current).and_return(1)
+      allow(@formatter).to receive(:example_count).and_return(2)
       @formatter.tick
     end
 
     it 'should increment the current' do
-      @formatter.current.should == 1
+      expect(@formatter.current).to eql(1)
     end
 
     it 'should store the marks in an array' do
-      @formatter.example_results.should include('=')
+      expect(@formatter.example_results).to include('=')
     end
 
   end
@@ -129,7 +130,9 @@ describe NyanCatFormatter do
   describe 'rainbowify' do
 
     it 'should increment the color index count' do
-      lambda { @formatter.rainbowify('=') }.should change(@formatter, :color_index).by(1)
+      expect {
+        @formatter.rainbowify('=')
+      }.to change(@formatter, :color_index).by(1)
     end
 
   end
@@ -137,15 +140,15 @@ describe NyanCatFormatter do
   describe 'highlight' do
 
     it 'should rainbowify passing examples' do
-      @formatter.highlight('=').should == "\e[38;5;154m-\e[0m"
+      expect(@formatter.highlight('=')).to eq("\e[38;5;154m-\e[0m")
     end
 
     it 'should mark failing examples as red' do
-      @formatter.highlight('*').should == "\e[31m*\e[0m"
+      expect(@formatter.highlight('*')).to eq("\e[31m*\e[0m")
     end
 
     it 'should mark pending examples as yellow' do
-      @formatter.highlight('!').should == "\e[33m!\e[0m"
+      expect(@formatter.highlight('!')).to eq("\e[33m!\e[0m")
     end
 
   end
@@ -153,34 +156,34 @@ describe NyanCatFormatter do
   describe 'start' do
 
     it 'should set the total amount of specs' do
-      @formatter.example_count.should == 2
+      expect(@formatter.example_count).to eq(2)
     end
 
     it 'should set the current to 0' do
-      @formatter.current.should == 0
+      expect(@formatter.current).to eq(0)
     end
 
   end
 
   describe "#format_duration" do
     it "should return just seconds for sub 60 seconds" do
-      @formatter.format_duration(5.3).should eq("5.3 seconds")
+      expect(@formatter.format_duration(5.3)).to eq("5.3 seconds")
     end
 
     it "should remove that extra zero if it is not needed" do
-      @formatter.format_duration(1.0).should eq("1 second")
+      expect(@formatter.format_duration(1.0)).to eq("1 second")
     end
 
     it "should plurlaize seconds" do
-      @formatter.format_duration(1.1).should eq("1.1 seconds")
+      expect(@formatter.format_duration(1.1)).to eq("1.1 seconds")
     end
 
     it "add a minute if it is just over 60 seconds" do
-      @formatter.format_duration(63.2543456456).should eq("1 minute and 3.25 seconds")
+      expect(@formatter.format_duration(63.2543456456)).to eq("1 minute and 3.25 seconds")
     end
 
     it "should pluralize minutes" do
-      @formatter.format_duration(987.34).should eq("16 minutes and 27.34 seconds")
+      expect(@formatter.format_duration(987.34)).to eq("16 minutes and 27.34 seconds")
     end
   end
 
@@ -195,7 +198,7 @@ describe NyanCatFormatter do
 
           context "when in example #{i}" do
             it "should return 1 as the example width" do
-              @formatter.example_width.should == 1
+              expect(@formatter.example_width).to eq(1)
             end
           end
         end
