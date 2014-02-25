@@ -77,7 +77,7 @@ NyanCatFormatter = Class.new(parent_class) do
   #
   # @return [Fixnum]
   def current_width
-    padding_width + example_width + cat_length
+    padding_width + (@current * example_width) + cat_length
   end
 
   # Gets the padding for the current example count
