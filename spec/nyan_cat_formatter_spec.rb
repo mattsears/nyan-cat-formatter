@@ -16,7 +16,14 @@ describe NyanCatFormatter do
       @formatter.instance_variable_set(:@example_group, OpenStruct.new(:description => "group"))
     end
     @formatter.start(2)
-    sleep(0.1)  # Just to slow it down a little :-)
+    @formatter.example_started(@example)
+  end
+
+  shared_examples 'a test' do
+    it 'should call the increment method' do
+      expect(@formatter).to receive(:tick)
+      @formatter.example_passed(@example)
+    end
   end
 
   describe 'passed, pending and failed' do
@@ -26,11 +33,7 @@ describe NyanCatFormatter do
     end
 
     describe 'example_passed' do
-
-      it 'should call the increment method' do
-        expect(@formatter).to receive(:tick)
-        @formatter.example_passed(@example)
-      end
+      it_behaves_like 'a test'
 
       it 'should relax Nyan Cat' do
         @formatter.example_passed(@example)
@@ -48,11 +51,7 @@ describe NyanCatFormatter do
     end
 
     describe 'example_pending' do
-
-      it 'should call the tick method' do
-        expect(@formatter).to receive(:tick)
-        @formatter.example_pending(@example)
-      end
+      it_behaves_like 'a test'
 
       it 'should increment the pending count' do
         expect {
@@ -73,11 +72,7 @@ describe NyanCatFormatter do
     end
 
     describe 'example_failed' do
-
-      it 'should call the increment method' do
-        expect(@formatter).to receive(:tick)
-        @formatter.example_failed(@example)
-      end
+      it_behaves_like 'a test'
 
       it 'should increment the failure count' do
         expect {

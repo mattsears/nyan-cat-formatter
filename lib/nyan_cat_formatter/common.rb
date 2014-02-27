@@ -46,12 +46,17 @@ module NyanCat
     #
     # @return nothing
     def dump_progress
+      output.print(progress_lines.join("\n") + eol)
+    end
+    
+    def progress_lines
       padding = @example_count.to_s.length * 2 + 2
-      line = nyan_trail.split("\n").each_with_index.inject([]) do |result, (trail, index)|
-        value = "#{scoreboard[index]}/#{@example_count}:"
-        result << format("%s %s", value, trail)
-      end.join("\n")
-      output.print line + eol
+      [
+        nyan_trail.split("\n").each_with_index.inject([]) do |result, (trail, index)|
+          value = "#{scoreboard[index]}/#{@example_count}:"
+          result << format("%s %s", value, trail)
+        end
+      ].flatten
     end
 
     # Determines how we end the trail line. If complete, return a newline etc.
@@ -59,7 +64,7 @@ module NyanCat
     # @return [String]
     def eol
       return "\n" if @current == @example_count
-      length = (nyan_cat.split("\n").length - 1)
+      length = progress_lines.length - 1
       length > 0 ? format("\e[1A" * length + "\r") : "\r"
     end
 
