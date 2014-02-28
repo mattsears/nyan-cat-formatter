@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 module NyanCat
   module Common
     ESC      = "\e["
@@ -7,7 +8,7 @@ module NyanCat
     FAIL     = '*'
     ERROR    = '!'
     PENDING  = '+'
-    
+
     def self.included(base)
       base.class_eval do
         attr_reader :current, :example_results, :color_index, :pending_count, :failure_count,
@@ -66,7 +67,8 @@ module NyanCat
     #
     # @return [Fixnum]
     def current_width
-      padding_width + example_width + cat_length
+      # padding_width + example_width + cat_length
+      padding_width + (@current * example_width) + cat_length
     end
 
     # Gets the padding for the current example count
