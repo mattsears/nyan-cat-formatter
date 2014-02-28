@@ -1,2 +1,7 @@
-#vi:ft=ruby
 gem 'rspec', '~> 2.14'
+
+group :development do
+  gem 'rake'
+end
+
+#vi:ft=ruby

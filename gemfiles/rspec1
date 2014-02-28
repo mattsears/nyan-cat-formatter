@@ -1,5 +1,9 @@
-#vi:ft=ruby
-
-source 'https://rubygems.org'
+source :rubygems
 
 gem 'rspec', '~> 1'
+
+group :development do
+  gem 'rake'
+end
+
+# vi:ft=ruby
