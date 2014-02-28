@@ -31,7 +31,7 @@ class RSpec3 < RSpec::Core::Formatters::BaseTextFormatter
     if notification.respond_to?(:example)
       super(notification)
     else
-      super(OpenStruct.new(example: notification))
+      super(OpenStruct.new(:example => notification))
     end
 
     @pending_count += 1
@@ -44,7 +44,7 @@ class RSpec3 < RSpec::Core::Formatters::BaseTextFormatter
     if notification.respond_to?(:example)
       super(notification)
     else
-      super(OpenStruct.new(example: notification))
+      super(OpenStruct.new(:example => notification))
     end
 
     @failure_count += 1
@@ -66,8 +66,4 @@ class RSpec3 < RSpec::Core::Formatters::BaseTextFormatter
       dump_commands_to_rerun_failed_examples
     end
   end
-
-  # -------
-  #
-
 end
