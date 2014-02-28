@@ -1,4 +1,5 @@
-module RSpec1
+class RSpec1 < Spec::Runner::Formatter::BaseTextFormatter
+  include NyanCat::Common
 
   def start(example_count)
     super(example_count)
