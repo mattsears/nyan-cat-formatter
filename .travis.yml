@@ -4,3 +4,7 @@ rvm:
   - 1.9.3
   - 2.1.0
   - ree
+gemfile:
+  - Gemfile
+  - gemfiles/rspec1.gemfile
+  - gemfiles/rspec2.gemfile

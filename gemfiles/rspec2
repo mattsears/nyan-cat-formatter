@@ -1,0 +1,2 @@
+#vi:ft=ruby
+gem 'rspec', '~> 2.14'

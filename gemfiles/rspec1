@@ -1,0 +1,5 @@
+#vi:ft=ruby
+
+source 'https://rubygems.org'
+
+gem 'rspec', '~> 1'
