@@ -12,8 +12,8 @@ class RSpec3 < RSpec::Core::Formatters::BaseTextFormatter
   end
 
   def start(notification)
+    # TODO: Lazy fix for specs.
     if notification.kind_of?(Fixnum)
-      # TODO: Lazy fix for examples.
       super(OpenStruct.new(:count => notification))
     else
       super(notification)
@@ -28,12 +28,25 @@ class RSpec3 < RSpec::Core::Formatters::BaseTextFormatter
   end
 
   def example_pending(notification)
-    super(notification)
+    if notification.respond_to?(:example)
+      super(notification)
+    else
+      super(OpenStruct.new(example: notification))
+    end
+
+    @pending_count += 1
+
     tick PENDING
   end
 
   def example_failed(notification)
-    super(notification)
+    # TODO: Lazy fix for specs
+    if notification.respond_to?(:example)
+      super(notification)
+    else
+      super(OpenStruct.new(example: notification))
+    end
+
     @failure_count += 1
     tick FAIL
   end
@@ -44,9 +57,7 @@ class RSpec3 < RSpec::Core::Formatters::BaseTextFormatter
 
   def dump_summary(notification)
     duration      = notification.duration
-    example_count = notification.example_count
     failure_count = notification.failure_count
-    pending_count = notification.pending_count
     dump_profile if profile_examples? && failure_count == 0
     summary = "\nYou've Nyaned for #{format_duration(duration)}\n".split(//).map { |c| rainbowify(c) }
     output.puts summary.join
