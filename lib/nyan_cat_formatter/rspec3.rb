@@ -4,7 +4,9 @@ require 'ostruct'
 class RSpec3 < RSpec::Core::Formatters::BaseTextFormatter
   include NyanCat::Common
 
-  RSpec::Core::Formatters.register self, :example_passed, :example_pending,
+  attr_reader :example_name
+
+  RSpec::Core::Formatters.register self, :example_started, :example_passed, :example_pending,
     :example_failed, :start_dump, :start
 
   def initialize(output)
@@ -21,6 +23,13 @@ class RSpec3 < RSpec::Core::Formatters::BaseTextFormatter
 
     @current = @color_index = @passing_count = 0
     @example_results = []
+  end
+
+  def example_started(notification)
+    if notification.respond_to?(:example)
+      notification = notification.example
+    end
+    @example_name = notification.full_description
   end
 
   def example_passed(notification)

@@ -1,10 +1,17 @@
 class RSpec2 < RSpec::Core::Formatters::BaseTextFormatter
   include NyanCat::Common
 
+  attr_reader :example_name
+
   def start(example_count)
     super(example_count)
     @current = @color_index = @passing_count = 0
     @example_results = []
+  end
+
+  def example_started(example)
+    super(example)
+    @example_name = example.full_description
   end
 
   def example_passed(example)
