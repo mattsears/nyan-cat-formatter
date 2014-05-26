@@ -15,6 +15,16 @@ describe NyanCatWideFormatter do
       @whole_net_width = 100 - 2*2 - 6 - 11
     end
 
+    context "for rspec 3" do
+      context "to avoid deprecation warnings" do
+        it "registers a nyan cat wide formatter compatible with rspec 3 format" do
+          if Gem::Version.new(RSpec::Core::Version::STRING).release >= Gem::Version.new('3.0.0')
+            expect(RSpec::Core::Formatters::Loader.formatters.keys).to include(NyanCatWideFormatter)
+          end
+        end
+      end
+    end
+
     context "for 35 examples" do
       before do
         @formatter.start(35)
