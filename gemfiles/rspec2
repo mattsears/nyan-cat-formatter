@@ -1,5 +1,6 @@
-source "https://rubygems.org"
-gem 'rspec', '~> 2.14'
+source 'https://rubygems.org'
+
+gem 'rspec', '~> 2.99'
 
 group :development do
   gem 'rake'

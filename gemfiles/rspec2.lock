@@ -17,4 +17,4 @@ PLATFORMS
 
 DEPENDENCIES
   rake
-  rspec (~> 2.14)
+  rspec (~> 2.99)
