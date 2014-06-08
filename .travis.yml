@@ -1,4 +1,6 @@
-before_install: gem install bundler
+before_script:
+  - gem install bundler
+  - bundle install
 
 rvm:
   - 1.8.7
