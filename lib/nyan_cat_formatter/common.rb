@@ -9,10 +9,25 @@ module NyanCat
     ERROR    = '!'
     PENDING  = '+'
 
+    VT100_CODES =
+      {
+      :black   => 30,
+      :red     => 31,
+      :green   => 32,
+      :yellow  => 33,
+      :blue    => 34,
+      :magenta => 35,
+      :cyan    => 36,
+      :white   => 37,
+      :bold    => 1,
+    }
+
+    VT100_CODE_VALUES = VT100_CODES.invert
+
     def self.included(base)
       base.class_eval do
         attr_reader :current, :example_results, :color_index, :pending_count, :failure_count,
-          :example_count
+        :example_count
       end
     end
 
@@ -48,7 +63,7 @@ module NyanCat
     def dump_progress
       output.print(progress_lines.join("\n") + eol)
     end
-    
+
     def progress_lines
       padding = @example_count.to_s.length * 2 + 2
       [
@@ -131,15 +146,15 @@ module NyanCat
     # @return [Array] Nyan cats
     def ascii_cat(o = '^')
       [[ "_,------,   ",
-         "_|  /\\_/\\ ",
-         "~|_( #{o} .#{o})  ",
-      " \"\"  \"\" "
-      ],
-      [ "_,------,   ",
-        "_|   /\\_/\\",
-        "^|__( #{o} .#{o}) ",
-        " \" \"  \" \""
-      ]]
+          "_|  /\\_/\\ ",
+          "~|_( #{o} .#{o})  ",
+          " \"\"  \"\" "
+        ],
+        [ "_,------,   ",
+          "_|   /\\_/\\",
+          "^|__( #{o} .#{o}) ",
+          " \" \"  \" \""
+        ]]
     end
 
     # Colorizes the string with raindow colors of the rainbow
@@ -214,5 +229,36 @@ module NyanCat
     def cat_length
       nyan_cat.split("\n").group_by(&:size).max.first
     end
+
+    def success_color(text)
+      wrap(text, :success)
+    end
+
+    def pending_color(text)
+      wrap(text, :pending)
+    end
+
+    def failure_color(text)
+      wrap(text, :failure)
+    end
+
+    def console_code_for(code_or_symbol)
+      if VT100_CODE_VALUES.has_key?(code_or_symbol)
+        code_or_symbol
+      else
+        VT100_CODES.fetch(code_or_symbol) do
+          console_code_for(:white)
+        end
+      end
+    end
+
+    def wrap(text, code_or_symbol)
+      if RSpec.configuration.color_enabled?
+        "\e[#{console_code_for(code_or_symbol)}m#{text}\e[0m"
+      else
+        text
+      end
+    end
+
   end
 end
