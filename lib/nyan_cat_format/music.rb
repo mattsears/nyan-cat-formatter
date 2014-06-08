@@ -1,6 +1,6 @@
 module NyanCatFormat
   module Music
-  
+
     MUSIC_LENGTH = 27.06 # seconds
 
     def osx?
@@ -59,11 +59,11 @@ module NyanCatFormat
       end
     end
 
-    def dump_summary(duration, example_count, failure_count, pending_count)
+    def dump_summary(*args)
       kill_music
       super
     end
-    
+
     private
 
     def play_on_linux
