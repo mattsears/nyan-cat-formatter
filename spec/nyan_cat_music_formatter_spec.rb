@@ -68,12 +68,8 @@ describe NyanCatMusicFormatter do
       before { formatter.platform = 'linux'}
       it 'plays the song for linux too' do
         formatter.start 10
-        expect {
-          mock_kernel.seen.any? { |entry| entry. end_with? "mpg321 #{path_to_mp3} &>/dev/null &" }
-        }.to be
-        expect {
-          mock_kernel.seen.any? { |entry| entry. end_with? "mpg123 #{path_to_mp3} &>/dev/null &" } 
-        }.to be
+        expect(mock_kernel.seen.any? { |entry| entry. end_with? "mpg321 #{path_to_mp3} &>/dev/null &" }).to be
+        expect(mock_kernel.seen.any? { |entry| entry. end_with? "mpg123 #{path_to_mp3} &>/dev/null &" }).to be
       end
     end
 
