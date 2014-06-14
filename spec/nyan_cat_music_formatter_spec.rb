@@ -1,10 +1,16 @@
 require 'spec_helper'
 require 'stringio'
+require 'fileutils'
 require 'nyan_cat_music_formatter'
 
 class MockKernel
   def system(string)
     seen << string
+  end
+
+  def spawn(string)
+    seen << string
+    rand(10000)
   end
 
   def seen
@@ -45,6 +51,11 @@ describe NyanCatMusicFormatter do
   end
 
   describe 'start' do
+    before do
+      allow(Process).to receive(:wait) { sleep 1 }
+      allow(Process).to receive(:kill).and_return(true)
+    end
+
     it 'sets the total amount of specs' do
       formatter.start 3
       expect(formatter.example_count).to eql(3)
@@ -60,24 +71,48 @@ describe NyanCatMusicFormatter do
 
       it 'plays the song in the background' do
         formatter.start 3
-        expect(mock_kernel.seen).to include("afplay #{path_to_mp3} &")
+        expect(mock_kernel.seen).to include("afplay #{path_to_mp3}")
       end
     end
 
     context 'when on linux' do
       before { formatter.platform = 'linux'}
-      it 'plays the song for linux too' do
+
+      it 'plays the song for linux too with mpg123 when available' do
+        allow(mock_kernel).to receive(:system).with(match(/which mpg123/)).and_return(true)
+        allow(mock_kernel).to receive(:system).with(match(/which mpg321/)).and_return(false)
         formatter.start 10
-        expect(mock_kernel.seen.any? { |entry| entry. end_with? "mpg321 #{path_to_mp3} &>/dev/null &" }).to be
-        expect(mock_kernel.seen.any? { |entry| entry. end_with? "mpg123 #{path_to_mp3} &>/dev/null &" }).to be
+        expect(mock_kernel.seen.any? { |entry| entry. end_with? "mpg123 #{path_to_mp3} &>/dev/null" }).to be
+      end
+
+      it 'plays the song for linux too with mpg321 when available' do
+        allow(mock_kernel).to receive(:system).with(match(/which mpg321/)).and_return(true)
+        allow(mock_kernel).to receive(:system).with(match(/which mpg123/)).and_return(false)
+        formatter.start 10
+        expect(mock_kernel.seen.any? { |entry| entry. end_with? "mpg321 #{path_to_mp3} &>/dev/null" }).to be
       end
     end
 
-    context 'when not on OS X' do
+    context 'when on Windows' do
       before { formatter.platform = 'windows' }
 
       it 'does not play the song' do
         formatter.start 4
+        expect(mock_kernel.seen).to be_empty
+      end
+    end
+
+    context 'when the music file does not exist' do
+      before do
+        FileUtils.mv path_to_mp3, "#{ path_to_mp3 }.tmp"
+      end
+
+      after do
+        FileUtils.mv "#{ path_to_mp3 }.tmp", path_to_mp3
+      end
+
+      it "won't try to play anything" do
+        formatter.start 42
         expect(mock_kernel.seen).to be_empty
       end
     end
