@@ -1,8 +1,6 @@
 module NyanCatFormat
   module Music
 
-    MUSIC_LENGTH = 27.06 # seconds
-
     def osx?
       platform.downcase.include?("darwin")
     end
@@ -33,30 +31,8 @@ module NyanCatFormat
 
     def start input
       super
-      t = Thread.new do
-        loop do
-          if osx?
-            kernel.system("afplay #{nyan_mp3} &")
-          elsif linux?
-            play_on_linux
-          end
-          Thread.current["started_playing"] ||= true
-          sleep MUSIC_LENGTH
-        end
-      end
-      until t["started_playing"]
-        sleep 0.001
-      end
-    end
-
-    def kill_music
-      if File.exists? nyan_mp3
-        if osx?
-          system("killall -9 afplay &>/dev/null")
-        elsif linux?
-          kill_music_on_linux
-        end
-      end
+      @music_thread = Thread.new { start_music_or_kill(Thread.current) }
+      wait_for_music_to_start(@music_thread)
     end
 
     def dump_summary(*args)
@@ -66,15 +42,42 @@ module NyanCatFormat
 
     private
 
-    def play_on_linux
-      kernel.system("[ -e #{nyan_mp3} ] && type mpg321 &>/dev/null && mpg321 #{nyan_mp3} &>/dev/null &") if kernel.system('which mpg321 &>/dev/null && type mpg321 &>/dev/null')
-      kernel.system("[ -e #{nyan_mp3} ] && type mpg123 &>/dev/null && mpg123 #{nyan_mp3} &>/dev/null &") if kernel.system('which mpg123 &>/dev/null && type mpg123 &>/dev/null')
+    def kill_music
+      if @music_thread && @music_thread['music_pid']
+        @music_thread.kill
+        Process.kill('KILL', @music_thread['music_pid'])
+      end
     end
 
-    def kill_music_on_linux
-      system("killall -9 mpg321 &>/dev/null") if kernel.system("which mpg321 &>/dev/null && type mpg321 &>/dev/null")
-      system("killall -9 mpg123 &>/dev/null") if kernel.system("which mpg123 &>/dev/null && type mpg123 &>/dev/null")
+    def linux_player
+      %w{mpg321 mpg123}.find {|player|
+        kernel.system("which #{ player } &>/dev/null && type #{ player } &>/dev/null")
+      }
     end
 
+    def music_command
+      # this isn't really threadsafe but it'll work if we're careful
+      return @music_command if @music_command
+      if osx?
+        @music_command = "afplay #{nyan_mp3}"
+      elsif linux? && linux_player
+        @music_command = "#{ linux_player } #{ nyan_mp3 } &>/dev/null"
+      end
+    end
+
+    def start_music_or_kill(thread)
+      thread.exit unless File.exists?(nyan_mp3) && music_command
+      loop do
+        thread['music_pid'] = kernel.spawn(music_command)
+        thread["started_playing"] ||= true
+        Process.wait(thread['music_pid'])
+      end
+    end
+
+    def wait_for_music_to_start(music_thread)
+      while !music_thread["started_playing"] && music_thread.status
+        sleep 0.001
+      end
+    end
   end
 end
