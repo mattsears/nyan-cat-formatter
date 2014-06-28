@@ -11,8 +11,8 @@ class RSpec3 < RSpec::Core::Formatters::BaseTextFormatter
 
   def initialize(output)
     super(output)
-    @failure_count = 0
-    @pending_count = 0
+    # @failure_count = 0
+    # @pending_count = 0
   end
 
   def start(notification)
@@ -23,8 +23,10 @@ class RSpec3 < RSpec::Core::Formatters::BaseTextFormatter
       super(notification)
     end
 
-    @current = @color_index = @passing_count = 0
+    @current = @color_index = @passing_count = @failure_count = @pending_count = 0
     @example_results = []
+    @failed_examples = []
+    @pending_examples = []
   end
 
   def example_started(notification)
@@ -39,11 +41,13 @@ class RSpec3 < RSpec::Core::Formatters::BaseTextFormatter
   end
 
   def example_pending(notification)
+    @pending_examples << notification
     @pending_count += 1
     tick PENDING
   end
 
   def example_failed(notification)
+    @failed_examples << notification
     @failure_count += 1
     tick FAIL
   end
