@@ -65,7 +65,6 @@ module NyanCat
     end
 
     def progress_lines
-      padding = @example_count.to_s.length * 2 + 2
       [
         nyan_trail.split("\n").each_with_index.inject([]) do |result, (trail, index)|
           value = "#{scoreboard[index]}/#{@example_count}:"
@@ -130,7 +129,7 @@ module NyanCat
     def nyan_trail
       marks = @example_results.each_with_index.map{ |mark, i| highlight(mark) * example_width(i) }
       marks.shift(current_width - terminal_width) if current_width >= terminal_width
-      nyan_cat_lines = nyan_cat.split("\n").each_with_index.map do |line, index|
+      nyan_cat.split("\n").each_with_index.map do |line, index|
         format("%s#{line}", marks.join)
       end.join("\n")
     end

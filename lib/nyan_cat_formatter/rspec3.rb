@@ -58,7 +58,6 @@ class RSpec3 < RSpec::Core::Formatters::BaseTextFormatter
 
   def dump_summary(notification)
     duration      = notification.duration
-    failure_count = notification.failure_count
     summary = "\nYou've Nyaned for #{format_duration(duration)}\n".split(//).map { |c| rainbowify(c) }
     output.puts summary.join
     output.puts notification.fully_formatted
