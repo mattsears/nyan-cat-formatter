@@ -84,7 +84,7 @@ module NyanCat
 
     # Calculates the current flight length
     #
-    # @return [Fixnum]
+    # @return [Integer]
     def current_width
       # padding_width + example_width + cat_length
       padding_width + (@current * example_width) + cat_length
@@ -92,14 +92,14 @@ module NyanCat
 
     # Gets the padding for the current example count
     #
-    # @return [Fixnum]
+    # @return [Integer]
     def padding_width
       @example_count.to_s.length * 2 + 6
     end
 
     # A Unix trick using stty to get the console columns
     #
-    # @return [Fixnum]
+    # @return [Integer]
     def terminal_width
       if defined? JRUBY_VERSION
         default_width = 80
@@ -224,7 +224,7 @@ module NyanCat
 
     # Returns the cat length
     #
-    # @returns [Fixnum]
+    # @returns [Integer]
     def cat_length
       nyan_cat.split("\n").group_by(&:size).max.first
     end
