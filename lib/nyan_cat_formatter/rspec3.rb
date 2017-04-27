@@ -17,7 +17,7 @@ class RSpec3 < RSpec::Core::Formatters::BaseTextFormatter
 
   def start(notification)
     # TODO: Lazy fix for specs.
-    if notification.kind_of?(Fixnum)
+    if notification.kind_of?(Integer)
       super(OpenStruct.new(:count => notification))
     else
       super(notification)
