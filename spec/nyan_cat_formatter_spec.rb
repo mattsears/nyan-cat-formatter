@@ -50,6 +50,30 @@ describe NyanCatFormatter do
       end
     end
 
+    describe 'colors' do
+      before do
+        allow(RSpec.configuration).to receive(:color_enabled?).and_return(true)
+        @success_index = 1
+        @pending_index = 2
+        @failure_index = 3
+        @success_color_escape_string = "\e[32" # green
+        @pending_color_escape_string = "\e[33" # yellow
+        @failure_color_escape_string = "\e[31" # red
+      end
+
+      it 'should wrap success score in success color' do
+        expect(@formatter.scoreboard[@success_index][0..3]).to eq(@success_color_escape_string)
+      end
+
+      it 'should wrap pending score in pending color' do
+        expect(@formatter.scoreboard[@pending_index][0..3]).to eq(@pending_color_escape_string)
+      end
+
+      it 'should wrap failure score in failure color' do
+        expect(@formatter.scoreboard[@failure_index][0..3]).to eq(@failure_color_escape_string)
+      end
+    end
+
     describe 'example_pending' do
       it_behaves_like 'a test'
 
