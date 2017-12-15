@@ -9,8 +9,7 @@ module NyanCat
     ERROR    = '!'
     PENDING  = '+'
 
-    VT100_CODES =
-      {
+    VT100_CODES = {
       :black   => 30,
       :red     => 31,
       :green   => 32,
@@ -21,8 +20,6 @@ module NyanCat
       :white   => 37,
       :bold    => 1,
     }
-
-    VT100_CODE_VALUES = VT100_CODES.invert
 
     def self.included(base)
       base.class_eval do
@@ -241,19 +238,13 @@ module NyanCat
       wrap(text, :red)
     end
 
-    def console_code_for(code_or_symbol)
-      if VT100_CODE_VALUES.has_key?(code_or_symbol)
-        code_or_symbol
-      else
-        VT100_CODES.fetch(code_or_symbol) do
-          console_code_for(:white)
-        end
-      end
+    def console_color_code_for(symbol)
+      VT100_CODES[symbol] || VT100_CODES.fetch(:white)
     end
 
-    def wrap(text, code_or_symbol)
+    def wrap(text, symbol)
       if RSpec.configuration.color_enabled?
-        "\e[#{console_code_for(code_or_symbol)}m#{text}\e[0m"
+        "\e[#{console_color_code_for(symbol)}m#{text}\e[0m"
       else
         text
       end
