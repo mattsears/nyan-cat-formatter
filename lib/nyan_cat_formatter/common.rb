@@ -230,15 +230,15 @@ module NyanCat
     end
 
     def success_color(text)
-      wrap(text, :success)
+      wrap(text, :green)
     end
 
     def pending_color(text)
-      wrap(text, :pending)
+      wrap(text, :yellow)
     end
 
     def failure_color(text)
-      wrap(text, :failure)
+      wrap(text, :red)
     end
 
     def console_code_for(code_or_symbol)
