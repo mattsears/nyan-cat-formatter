@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RSpec1 < Spec::Runner::Formatter::BaseTextFormatter
   include NyanCat::Common
 
@@ -16,13 +18,13 @@ class RSpec1 < Spec::Runner::Formatter::BaseTextFormatter
 
   def example_pending(example, message = nil)
     super
-    @pending_count =+1
+    @pending_count = +1
     tick PENDING
   end
 
   def example_failed(example, counter = nil, failure = nil)
     super
-    @failure_count =+1
+    @failure_count = +1
     tick FAIL
   end
 
@@ -41,13 +43,13 @@ class RSpec1 < Spec::Runner::Formatter::BaseTextFormatter
   end
 
   def dump_summary(duration, example_count, failure_count, pending_count)
-    @output.puts "\nYou've Nyaned for #{format_duration(duration)}\n".each_char.map {|c| rainbowify(c)}.join
+    @output.puts "\nYou've Nyaned for #{format_duration(duration)}\n".each_char.map { |c| rainbowify(c) }.join
     summary = "#{example_count} example#{'s' unless example_count == 1}, #{failure_count} failure#{'s' unless failure_count == 1}"
-    summary << ", #{pending_count} pending" if pending_count > 0
+    summary << ", #{pending_count} pending" if pending_count.positive?
 
-    if failure_count == 0
+    if failure_count.zero?
       @output.puts failure_color(summary)
-    elsif pending_count > 0
+    elsif pending_count.positive?
       @output.puts pending_color(summary)
     else
       @output.puts success_color(summary)

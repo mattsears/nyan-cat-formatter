@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module NyanCatFormat
   module Helpers
     def rspec_3_or_greater?

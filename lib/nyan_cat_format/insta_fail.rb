@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 module NyanCatFormat
   module InstaFail
-    def example_failed( failure )
-      output.puts [ eol, "", failure.fully_formatted( @failure_count ), "" ].join( "\n" )
+    def example_failed(failure)
+      output.puts [eol, '', failure.fully_formatted(@failure_count), ''].join("\n")
       super
     end
   end

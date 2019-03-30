@@ -1,4 +1,6 @@
-require "rspec/core/formatters/base_text_formatter"
+# frozen_string_literal: true
+
+require 'rspec/core/formatters/base_text_formatter'
 require 'ostruct'
 
 class RSpec3 < RSpec::Core::Formatters::BaseTextFormatter
@@ -7,7 +9,7 @@ class RSpec3 < RSpec::Core::Formatters::BaseTextFormatter
   attr_reader :example_name
 
   RSpec::Core::Formatters.register self, :example_started, :example_passed, :example_pending,
-    :example_failed, :start_dump, :start
+                                   :example_failed, :start_dump, :start
 
   def initialize(output)
     super(output)
@@ -17,8 +19,8 @@ class RSpec3 < RSpec::Core::Formatters::BaseTextFormatter
 
   def start(notification)
     # TODO: Lazy fix for specs.
-    if notification.kind_of?(Integer)
-      super(OpenStruct.new(:count => notification))
+    if notification.is_a?(Integer)
+      super(OpenStruct.new(count: notification))
     else
       super(notification)
     end
@@ -30,13 +32,11 @@ class RSpec3 < RSpec::Core::Formatters::BaseTextFormatter
   end
 
   def example_started(notification)
-    if notification.respond_to?(:example)
-      notification = notification.example
-    end
+    notification = notification.example if notification.respond_to?(:example)
     @example_name = notification.full_description
   end
 
-  def example_passed(notification)
+  def example_passed(_notification)
     tick PASS
   end
 
@@ -52,17 +52,15 @@ class RSpec3 < RSpec::Core::Formatters::BaseTextFormatter
     tick FAIL
   end
 
-  def start_dump(notification)
+  def start_dump(_notification)
     @current = @example_count
   end
 
   def dump_summary(notification)
-    duration      = notification.duration
+    duration = notification.duration
     summary = "\nYou've Nyaned for #{format_duration(duration)}\n".split(//).map { |c| rainbowify(c) }
     output.puts summary.join
     output.puts notification.fully_formatted
-    if respond_to?(:dump_commands_to_rerun_failed_examples)
-      dump_commands_to_rerun_failed_examples
-    end
+    dump_commands_to_rerun_failed_examples if respond_to?(:dump_commands_to_rerun_failed_examples)
   end
 end
