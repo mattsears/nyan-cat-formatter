@@ -1,10 +1,10 @@
-# -*- coding: utf-8 -*-
+# frozen_string_literal: true
 
 require 'nyan_cat_formatter/common'
 
-rspec_bin = $0.split('/').last
+rspec_bin = $PROGRAM_NAME.split('/').last
 if rspec_bin == 'spec'
-  ['spec', 'spec/runner/formatter/base_text_formatter', 'nyan_cat_formatter/rspec1'].each {|f| require f}
+  ['spec', 'spec/runner/formatter/base_text_formatter', 'nyan_cat_formatter/rspec1'].each { |f| require f }
   formatter = RSpec1
 else
   require 'rspec/core/formatters/base_text_formatter'

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'stringio'
 require 'nyan_cat_insta_fail_formatter'
@@ -14,9 +16,8 @@ describe NyanCatInstaFailFormatter do
 
   it 'displays failed tests immediately' do
     example = double :example
-    expect(example).to receive( :fully_formatted ).and_return( "FAIL" )
+    expect(example).to receive(:fully_formatted).and_return('FAIL')
     @formatter.example_failed(example)
-    expect( @output.string ).to include('FAIL')
+    expect(@output.string).to include('FAIL')
   end
-
 end

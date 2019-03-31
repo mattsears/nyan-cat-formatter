@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RSpec2 < RSpec::Core::Formatters::BaseTextFormatter
   include NyanCat::Common
 
@@ -21,13 +23,13 @@ class RSpec2 < RSpec::Core::Formatters::BaseTextFormatter
 
   def example_pending(example)
     super(example)
-    @pending_count +=1
+    @pending_count += 1
     tick PENDING
   end
 
   def example_failed(example)
     super(example)
-    @failure_count +=1
+    @failure_count += 1
     tick FAIL
   end
 
@@ -36,12 +38,10 @@ class RSpec2 < RSpec::Core::Formatters::BaseTextFormatter
   end
 
   def dump_summary(duration, example_count, failure_count, pending_count)
-    dump_profile if profile_examples? && failure_count == 0
+    dump_profile if profile_examples? && failure_count.zero?
     summary = "\nYou've Nyaned for #{format_duration(duration)}\n".split(//).map { |c| rainbowify(c) }
     output.puts summary.join
     output.puts colorise_summary(summary_line(example_count, failure_count, pending_count))
-    if respond_to?(:dump_commands_to_rerun_failed_examples)
-      dump_commands_to_rerun_failed_examples
-    end
+    dump_commands_to_rerun_failed_examples if respond_to?(:dump_commands_to_rerun_failed_examples)
   end
 end

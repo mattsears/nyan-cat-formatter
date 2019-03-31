@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'stringio'
 require 'fileutils'
@@ -10,7 +12,7 @@ class MockKernel
 
   def spawn(string)
     seen << string
-    rand(10000)
+    rand(10_000)
   end
 
   def seen
@@ -76,7 +78,7 @@ describe NyanCatMusicFormatter do
     end
 
     context 'when on linux' do
-      before { formatter.platform = 'linux'}
+      before { formatter.platform = 'linux' }
 
       it 'plays the song for linux too with mpg123 when available' do
         allow(mock_kernel).to receive(:system).with(match(/which mpg123/)).and_return(true)
@@ -104,11 +106,11 @@ describe NyanCatMusicFormatter do
 
     context 'when the music file does not exist' do
       before do
-        FileUtils.mv path_to_mp3, "#{ path_to_mp3 }.tmp"
+        FileUtils.mv path_to_mp3, "#{path_to_mp3}.tmp"
       end
 
       after do
-        FileUtils.mv "#{ path_to_mp3 }.tmp", path_to_mp3
+        FileUtils.mv "#{path_to_mp3}.tmp", path_to_mp3
       end
 
       it "won't try to play anything" do

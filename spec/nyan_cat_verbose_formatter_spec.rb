@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'stringio'
 require 'nyan_cat_verbose_formatter'
@@ -25,5 +27,4 @@ describe NyanCatVerboseFormatter do
       expect(@formatter.progress_lines.first.scan(/[^ ]/)).to be_empty
     end
   end
-
 end
