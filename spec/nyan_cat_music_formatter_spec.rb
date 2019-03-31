@@ -82,14 +82,14 @@ describe NyanCatMusicFormatter do
         allow(mock_kernel).to receive(:system).with(match(/which mpg123/)).and_return(true)
         allow(mock_kernel).to receive(:system).with(match(/which mpg321/)).and_return(false)
         formatter.start 10
-        expect(mock_kernel.seen.any? { |entry| entry. end_with? "mpg123 #{path_to_mp3} &>/dev/null" }).to be
+        expect(mock_kernel.seen.any? { |entry| entry. end_with? "mpg123 #{path_to_mp3} > /dev/null 2>&1" }).to be
       end
 
       it 'plays the song for linux too with mpg321 when available' do
         allow(mock_kernel).to receive(:system).with(match(/which mpg321/)).and_return(true)
         allow(mock_kernel).to receive(:system).with(match(/which mpg123/)).and_return(false)
         formatter.start 10
-        expect(mock_kernel.seen.any? { |entry| entry. end_with? "mpg321 #{path_to_mp3} &>/dev/null" }).to be
+        expect(mock_kernel.seen.any? { |entry| entry. end_with? "mpg321 #{path_to_mp3} > /dev/null 2>&1" }).to be
       end
     end
 

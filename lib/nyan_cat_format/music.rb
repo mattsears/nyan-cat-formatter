@@ -51,7 +51,7 @@ module NyanCatFormat
 
     def linux_player
       %w{mpg321 mpg123}.find {|player|
-        kernel.system("which #{ player } &>/dev/null && type #{ player } &>/dev/null")
+        kernel.system("which #{player} > /dev/null 2>&1 && type #{player} > /dev/null 2>&1")
       }
     end
 
@@ -61,7 +61,7 @@ module NyanCatFormat
       if osx?
         @music_command = "afplay #{nyan_mp3}"
       elsif linux? && linux_player
-        @music_command = "#{ linux_player } #{ nyan_mp3 } &>/dev/null"
+        @music_command = "#{linux_player} #{nyan_mp3} > /dev/null 2>&1"
       end
     end
 
