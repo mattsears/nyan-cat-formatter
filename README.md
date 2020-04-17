@@ -57,7 +57,7 @@ Use the following command to run your specs:
 $ rspec spec -f NyanCatMusicFormatter
 ```
 
-And enjoy the site of Nyan Cat running across your terminal to the Nyan Cat song!
+And enjoy the sight of Nyan Cat running across your terminal to the Nyan Cat song!
 
 **2. Play the song by default when you run your specs:**
 
